@@ -45,4 +45,14 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * A User has zero or more Chirps
+     *
+     * @return
+     */
+    public function chirps()
+    {
+        return $this->hasMany(Chirp::class);
+    }
 }
