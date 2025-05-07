@@ -19,6 +19,71 @@ learning how to develop using Laravel.
 
 ## Installation
 
+### Via Laragon
+
+#### Run NPM install and update
+```bash
+npm install
+npm update
+```
+
+#### Run composer install and update
+> Before running composer commands below, ensure that you add Laragon to path.
+> Open Laragon > Right-Click -> Tools -> Path -> Add Laragon to Path.
+
+```bash
+composer install
+composer update
+```
+
+#### Create new sqlite file
+```bash
+touch database/database.sqlite
+```
+
+#### Copy .env.example to root folder and rename to .env
+```bash
+cp .env.example .env
+```
+
+#### Generate unique application key for the Laravel app.
+```bash
+php artisan key:generate
+```
+
+#### Update .env file with the following
+```bash
+APP_NAME="Chirper 2025/S1"  
+APP_URL=http://localhost:8000
+
+MAIL_MAILER=smtp  
+MAIL_HOST=127.0.0.1  
+MAIL_PORT=2525  
+MAIL_FROM_ADDRESS="chirper@example.com"  
+```
+
+#### Execute Mailpit
+```bash
+/c/Laragon/bin/mailpit/mailpit.exe --smtp 0.0.0.0:2525
+```
+
+#### Update composer run dev script to add Mailpit Watcher
+```bash
+"dev": [  
+    "Composer\\Config::disableProcessTimeout",  
+    "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"npm run dev\" \"c:\\ProgramData\\Laragon\\bin\\mailpit\\mailpit --smtp 0.0.0.0:2525\" --names=server,queue,vite,mailpit"],
+```
+
+#### Run migrations
+```bash
+php artisan migrate:fresh --seed
+```
+
+#### Finally, all requirements have been set up, run composer dev server to inspect laravel app
+```bash
+composer run dev
+```
+
 ### Via Laravel Herd
 
 One-click install a new application using this starter kit through [Laravel Herd](https://herd.laravel.com):
